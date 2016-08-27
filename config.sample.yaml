@@ -1,0 +1,9 @@
+surveyFile: "survey.yaml"
+saveFile: "survey-updated.yaml"
+resultsFile: "survey-results.yaml"
+mode: active
+locked: false
+sessionName: 'survey'
+sessionKeys:
+  - 'key1'
+  - 'key2'

@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  h1= title
+  div(ng-controller='QuestionnaireController')
+    h2(ng-model='title', class='question-title') {{ title }}
+    p(ng-model='question', class='question') {{ question }}
+    form(name='qForm')
+      div(class='answers-wrapper')
+        div(ng-repeat='a in answers', class='answer')
+          input(ng-if='type == "binary"', type='radio', name='{{ a.id }}', value='{{ a.str }}', ng-model='$parent.$parent.oneChoice', ng-disabled='{{ preview }}')
+          input(ng-if='type == "radio"', type='radio', name='{{ a.id }}', value='{{ a.str }}', ng-model='$parent.$parent.oneChoice', ng-disabled='{{ preview }}')
+          input(ng-if='type == "multi"', type='checkbox', name='{{ a.id }}', ng-model='$parent.a.model', ng-disabled='{{ preview }}')
+          input(ng-if='type == "scale"', type='number', min=0, max=10, name='{{ a.id }}', ng-model='$parent.a.model', ng-disabled='{{ preview }}')
+          label(class='answer') {{ a.str }}
+          span(ng-show='qForm.{{ a.id }}.$error.min', class='error') You cannot use values less than 0.
+          span(ng-show='qForm.{{ a.id }}.$error.max', class='error') You cannot use values greater than 10.
+    div(class='add-form', ng-show='last && !lock && preview')
+      div(class='added-question', ng-repeat='q in newQuestions')
+        h2 {{ q.title }}
+        div {{ q.question }}
+        ul(ng-repeat='a in q.answers')
+          li {{ a.name }}
+      form(name='newQForm')
+        div(id='new-question-wrapper', ng-show='last')
+          div(id='new-title')
+            label Question Title
+            input(type='text', ng-model='newTitle')
+          div(id='new-question')
+            label Question
+            input(type='text', ng-model='newQuestion')
+          div(id='new-qtype')
+            label Question Type
+            select(ng-model='newQType')
+              option(value='binary') Binary (e.g. Yes/No)
+              option(value='radio') Multiple choice (one answer)
+              option(value='multi') Multiple choice (multiple answers)
+              option(value='scale') Weighted answers (scale of 1-10)
+    div(class='new-answers')
+      form(name='new-answers')
+        div(id='your-answers', ng-show='newAnswers[qCount].length > 0') Your suggested answers
+        p(ng-repeat='na in newAnswers[qCount]', class='new-answer')
+          input(type='text', name='', ng-model='na.name')
+          span(class='fa fa-minus-circle icon remove-answer', ng-click='removeAnswer($index)') &nbsp;
+        p(id='add-icon', class='fa fa-plus-circle', ng-if='canAddAnswer()')
+          span(class='icon add-answer', ng-click='addAnswer()') add answer
+    div(class='nav' id='prev', ng-if='qCount != 0 && !last')
+      button(ng-click='prevClick()') Previous
+    div(class='nav', id='next', ng-show='!last')
+      button(ng-click='nextClick()') Next
+    div(class='nav', ng-show='newTitle && newQuestion && newQType != undefined && newQType != ""')
+      button(ng-click='saveQuestion()') Save question and answers
+    div(class='nav', ng-show='last && !preview && !locked')
+      button(ng-click='saveAnswers()') Save question and answers
+    div(class='clear')

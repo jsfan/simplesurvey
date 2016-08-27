@@ -1,0 +1,35 @@
+title: "General Survey"
+preamble:
+  active: "Welcome to the sample questionnaire. Please click next to start."
+  preview: "Welcome to the sample questionnaire. Have a look and contribute."
+postface:
+  active: "Thank you for filling out the survey"
+  preview: "Your suggested answers have been saved. If you would like to contribute new questions, you may do so below."
+questions:
+  - title: "Question 1"
+    question: Do you like coffee?
+    type: binary
+    answers:
+      - Yes
+      - No
+  - title: "Question 2"
+    question: Which one is your favourite car maker?
+    type: radio
+    answers:
+      - Mercedes
+      - BMW
+      - Audi
+  - title: "Question 3"
+    question: Which flowers do you like?
+    type: multi
+    answers:
+      - red roses.
+      - yellow tulips
+      - purple velvets
+  - title: "Question 4"
+    question: Rate how much you like each colour.
+    type: scale
+    answers:
+      - red
+      - green
+      - blue
