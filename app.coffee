@@ -17,7 +17,7 @@ class AppSetup
 
     # view engine setup
     self.app.set "views", path.join(__dirname, "views")
-    self.app.set "view engine", "jade"
+    self.app.set "view engine", "pug"
 
     # uncomment after placing your favicon in /public
     #self.app.use favicon(path.join(__dirname, "public", "favicon.ico"))
